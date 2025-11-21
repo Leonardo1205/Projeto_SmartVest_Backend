@@ -7,7 +7,7 @@ class OAuthAccount(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     user_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"), nullable=False, index=True)
-    provider = Column(String(30), nullable=False)            # 'google'
+    provider = Column(String(30), nullable=False)            
     provider_user_id = Column(String(255), nullable=False)
     email_verified = Column(Boolean, default=False)
     created_at = Column(DateTime(timezone=True), server_default=func.now())

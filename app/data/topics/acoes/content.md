@@ -1,0 +1,7 @@
+## O que é uma ação
+
+As empresas, quando constituídas, podem optar por diferentes tipos societários previstos na legislação. Um deles é conhecido como Sociedade Anônima, em que o capital social (o capital próprio aportado na empresa) é dividido em ações. Uma ação, portanto, representa a menor parcela do capital social das sociedades anônimas ou companhias.
+
+As companhias emitem ações com o objetivo de captar recursos, sob a forma de capital próprio, para os negócios da empresa. Do outro lado, os investidores que adquirem essas ações, e se tornam acionistas, o fazem com a expectativa de obter retorno financeiro. Sob essa ótica, uma ação é um investimento em um título patrimonial, que concede aos seus titulares, os acionistas, os direitos e deveres de um “sócio”, no limite das ações possuídas, conforme estabelecido na legislação.
+
+Uma ação formalmente é considerada um valor mobiliário, expressamente previsto no inciso I, artigo 2º, da Lei 6385/76. No entanto, apesar de todas as companhias ou sociedades anônimas terem o seu capital dividido em ações, somente as ações emitidas por companhias registradas na CVM, chamadas companhias abertas, podem ser negociadas publicamente as suas ações no mercado.

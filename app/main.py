@@ -4,6 +4,7 @@ from starlette.middleware.sessions import SessionMiddleware
 
 from app.core.config import settings
 from app.api.v1.routes.auth import router as auth_router
+from app.api.v1.routes.chat import router as chat_router
 from app.db.session import engine
 from app.db.base import Base
 from app.domain.models import user as _user
@@ -24,11 +25,12 @@ def create_app() -> FastAPI:
 
     app.include_router(auth_router, prefix=settings.API_V1_STR)
     app.include_router(google_router, prefix=settings.API_V1_STR)
+    app.include_router(chat_router, prefix=settings.API_V1_STR)
     app.add_middleware(SessionMiddleware, secret_key=settings.JWT_SECRET)
 
     @app.on_event("startup")
     async def on_startup():
-        Base.metadata.create_all(bind=engine)  # em prod, prefira Alembic
+        Base.metadata.create_all(bind=engine) 
 
     @app.get("/health")
     async def health():

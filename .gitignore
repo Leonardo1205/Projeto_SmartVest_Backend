@@ -4,3 +4,4 @@ __pycache__/
 *.pyc
 smartvest.db
 .vscode/
+db/vector/

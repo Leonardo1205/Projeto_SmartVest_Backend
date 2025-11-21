@@ -7,7 +7,7 @@ from app.db.session import SessionLocal
 from app.repositories.user_repository import UserRepository
 from app.core.security import create_access_token, hash_password
 from app.core.config import settings
-from app.domain.models.oauth_account import OAuthAccount  # <— importe o modelo
+from app.domain.models.oauth_account import OAuthAccount  
 
 router = APIRouter(tags=["oauth"])
 
@@ -46,7 +46,6 @@ async def google_callback(request: Request, db: Session = Depends(get_db)):
     provider_user_id = userinfo["sub"]
     email_verified = bool(userinfo.get("email_verified"))
 
-    # upsert usuário
     user = repo.get_by_email(db, email)
     if not user:
         user = repo.create(
@@ -56,7 +55,6 @@ async def google_callback(request: Request, db: Session = Depends(get_db)):
             password_hash=hash_password("oauth_google_dummy"),
         )
 
-    # upsert oauth_accounts usando ORM (sem SQL cru)
     oa = (
         db.query(OAuthAccount)
         .filter(

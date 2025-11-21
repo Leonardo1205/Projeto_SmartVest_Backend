@@ -24,7 +24,6 @@ auth_service = AuthService(repo)
 
 @router.post("/auth/register", response_model=TokenResponse, status_code=201)
 def register(payload: UserCreate, db: Session = Depends(get_db)):
-    # cria usuário e retorna token imediatamente
     user = user_service.register(db, payload)
     token = auth_service.authenticate(db, email=user.email, password=payload.password)
     return TokenResponse(access_token=token)

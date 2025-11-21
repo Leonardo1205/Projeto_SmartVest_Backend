@@ -1,4 +1,4 @@
-from pydantic_settings import BaseSettings
+from pydantic_settings import BaseSettings, SettingsConfigDict
 from pydantic import AnyHttpUrl, field_validator
 from typing import List
 
@@ -11,6 +11,7 @@ class Settings(BaseSettings):
     JWT_SECRET: str
     JWT_ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24
+
     GOOGLE_CLIENT_ID: str | None = None
     GOOGLE_CLIENT_SECRET: str | None = None
     OAUTH_BASE_URL: str = "http://127.0.0.1:8000"
@@ -18,16 +19,20 @@ class Settings(BaseSettings):
 
     CORS_ORIGINS: List[AnyHttpUrl] | List[str] = ["http://localhost:5173"]
 
+    LLM_PROVIDER: str = "gemini"  
+    GEMINI_API_KEY: str | None = None
+    GEMINI_MODEL: str = "gemini-1.5-flash"
+
     @field_validator("CORS_ORIGINS", mode="before")
     @classmethod
     def split_csv(cls, v):
-        # aceita lista ou string separada por vírgula
         if isinstance(v, str):
             return [o.strip() for o in v.split(",") if o.strip()]
         return v
 
-    class Config:
-        env_file = ".env"
-        extra = "ignore"
+    model_config = SettingsConfigDict(
+        env_file=".env",
+        extra="ignore",
+    )
 
 settings = Settings()
