@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from starlette.middleware.sessions import SessionMiddleware
+from contextlib import asynccontextmanager
 
 from app.core.config import settings
 from app.api.v1.routes.auth import router as auth_router
@@ -11,9 +12,16 @@ from app.domain.models import user as _user
 from app.domain.models import oauth_account as _oauth
 from app.api.v1.routes.oauth_google import router as google_router
 
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # O que acontece ANTES do app iniciar (antigo "startup")
+    Base.metadata.create_all(bind=engine) 
+    yield
+    # O que acontece DEPOIS do app desligar (shutdown) - nada por enquanto
 
 def create_app() -> FastAPI:
-    app = FastAPI(title=settings.PROJECT_NAME)
+    # Adicionamos o lifespan aqui
+    app = FastAPI(title=settings.PROJECT_NAME, lifespan=lifespan)
 
     app.add_middleware(
         CORSMiddleware,
@@ -27,10 +35,6 @@ def create_app() -> FastAPI:
     app.include_router(google_router, prefix=settings.API_V1_STR)
     app.include_router(chat_router, prefix=settings.API_V1_STR)
     app.add_middleware(SessionMiddleware, secret_key=settings.JWT_SECRET)
-
-    @app.on_event("startup")
-    async def on_startup():
-        Base.metadata.create_all(bind=engine) 
 
     @app.get("/health")
     async def health():
